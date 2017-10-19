@@ -1,0 +1,17 @@
+JSONArray clouds_yadocker = [ {% for host in hosts %}
+  [
+    cloud_name: '{{host.cloud_name}}',
+    docker_url: '{{host.docker_url}}',
+    max_containers: '{{host.max_containers}}',
+    docker_templates: [
+      // List item of templates {% for docker in host.docker_templates %}
+      [
+         docker_image_name: '{{docker.docker_image_name}}',
+         max_instances: '{{docker.max_instances}}',
+         labels: '{{docker.labels}}',
+      ],
+{% endfor %}
+      ],
+    ],
+{% endfor %}
+  ] as JSONArray
