@@ -1,6 +1,11 @@
+import argparse
 import yaml
 import os.path
-import jinja2
+from jinja2 import FileSystemLoader, Environment
+import jenkins
+import logging
+
+logging.basicConfig(level=logging.INFO)
 
 class LoaderMeta(type):
 
@@ -41,12 +46,26 @@ class Loader(yaml.Loader, metaclass=LoaderMeta):
             else:
                 return ''.join(f.readlines())
 
-if __name__ == '__main__':
-    with open('hosts.yml', 'r') as f:
-        data = yaml.load(f, Loader)
+def jinja2_from_template(directory, template_name, data):
+    loader = FileSystemLoader(directory)
+    env = Environment(loader=loader)
+    template = env.get_template(template_name)
+    return template.render(hosts=data)
 
-    env = jinja2.Environment(loader=jinja2.FileSystemLoader('./'))
-    template_output = env.get_template('docker-hosts.groovy.tmpl').render(hosts=data)
-    print(template_output)
-    with open('configure-yadocker-cloud.groovy', 'w') as fw:
-       fw.write(template_output)
+def get_parser():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-u', '--username', type=str, required=True, help='Username for Jenkins server')
+    parser.add_argument('-p', '--password', type=str, required=True, help='Password for Jenkins server')
+    parser.add_argument('-i', '--inventory', type=str, required=True, default='hosts.yml', help='specify inventory host path')
+    return parser
+
+if __name__ == '__main__':
+    parser = get_parser()
+    args = parser.parse_args()
+    with open(args.inventory, 'r') as f:
+        data = yaml.load(f, Loader)
+    template_output = jinja2_from_template('./templates', 'configure-yadocker-cloud.groovy.j2', data)
+    server = jenkins.Jenkins('http://localhost:8080', username=args.username, password=args.password)
+    info = server.run_script(template_output)
+    logging.info(info)
+
