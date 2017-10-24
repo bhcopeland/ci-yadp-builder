@@ -14,10 +14,9 @@
   launch_ssh_connection_timeout: '60'
   launch_ssh_max_num_retries: '1000'
   launch_ssh_time_wait_between_retries: '60'
-  volumes: !include docker_x86_64_volumes.yml
+  volumes: !include docker_vol_x86_64.yml
 - utopic-amd64:
   docker_image_name: 'linaro/utopic'
   max_instances: '10'
   labels: 'docker-utopic docker-utopic-amd64 docker-utopic-amd64-08'
-  volumes: '/home/tcwg-buildslave/snapshots-ref:/home/tcwg-buildslave/snapshots-ref:ro
-            \n/home/tcwg-buildslave/.jenkins:/home/tcwg-buildslave/.jenkins:rw'
+  volumes: !include docker_vol_x86_64.yml

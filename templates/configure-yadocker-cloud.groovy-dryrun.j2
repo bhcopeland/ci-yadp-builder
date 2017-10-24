@@ -366,13 +366,12 @@ if(!Jenkins.instance.isQuietingDown()) {
     ArrayList<DockerCloud> clouds = new ArrayList<DockerCloud>()
     clouds = bindJSONToList(DockerCloud.class, clouds_yadocker)
     if(clouds.size() > 0) {
-        dockerConfigUpdated = true
-        Jenkins.instance.clouds.removeAll(DockerCloud)
-        Jenkins.instance.clouds.addAll(clouds)
+        dockerConfigUpdated = false
+//        Jenkins.instance.clouds.removeAll(DockerCloud)
+//       Jenkins.instance.clouds.addAll(clouds)
         clouds*.name.each { cloudName ->
-            println "Configured Yet Another Docker cloud ${cloudName}"
+            println "DRYRUN: Configured Yet Another Docker cloud ${cloudName}"
         }
-        Jenkins.instance.save()
     } else {
         println 'Nothing changed.  No Yet Another docker clouds to configure.'
     }

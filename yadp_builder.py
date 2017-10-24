@@ -78,6 +78,9 @@ if __name__ == '__main__':
     if args.dryrun:
         with open('/tmp/configure-yadocker-cloud.groovy', 'w') as fw:
             fw.write(template_output)
+        template_output = jinja2_from_template('./templates', 'configure-yadocker-cloud.groovy-dryrun.j2', data)
+        publishdry = server.run_script(template_output)
+        logging.info(publishdry)
     else:
-        info = server.run_script(template_output)
-        logging.info(info)
+        publish = server.run_script(template_output)
+        logging.info(publish)
