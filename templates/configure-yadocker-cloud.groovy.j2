@@ -51,9 +51,85 @@ JSONArray clouds_yadocker = [ {% for host in hosts %}
     docker_templates: [
       // List item of templates {% for docker in host.docker_templates %}
       [
-         docker_image_name: '{{docker.docker_image_name}}',
          max_instances: '{{docker.max_instances}}',
+         //DOCKER CONTAINER LIFECYCLE
+         docker_image_name: '{{docker.docker_image_name}}',
+         //PULL IMAGE SETTINGS
+         //valid values: pull_latest, pull_always, pull_once, pull_never
+         pull_strategy: '{{docker.pull_strategy}}',
+         pull_registry_credentials_id: '{{docker.pull_registry_credentials_id}}',
+         //CREATE CONTAINER SETTINGS
+         docker_command: '{{docker.docker_command}}',
+         hostname: '{{docker.hostname}}',
+         dns: '{{docker.dns}}',
+         //volumes can be a string or list of strings
+         volumes: '{{docker.volumes}}',
+         //volumes_from can be a string or list of strings
+         //volumes_from: '{{docker.volumes_from}}',
+         //environment can be a string or list of strings
+         environment: '{{docker.environment}}',
+         port_bindings: '{{docker.port_bindings}}',
+         bind_all_declared_ports: '{{docker.bind_all_declared_ports}}',
+         //0 is unlimited
+         memory_limit_in_mb: '{{docker.memory_limit_in_mb}}',
+         //0 is unlimited
+         cpu_shares: '{{docker.cpu_shares}}',
+         run_container_privileged: '{{docker.run_container_privileged}}',
+         allocate_pseudo_tty: '{{docker.allocate_pseudo_tty}}',
+         mac_address: '{{docker.mac_address}}',
+         //extra_hosts can be a string or list of strings
+         extra_hosts: '{{docker.extra_hosts}}',
+         network_mode: '{{docker.network_mode}}',
+         //devices can be a string or list of strings
+         devices: '{{docker.devices}}',
+         cpuset_constraint_cpus: '{{docker.cpuset_constraint_cpus}}',
+         cpuset_constraint_mems: '{{docker.cpuset_constraint_mems}}',
+         //links can be a string or list of strings
+         links: '{{docker.links}}',
+         //STOP CONTAINER SETTINGS
+         stop_container_timeout: '{{docker.stop_container_timeout}}',
+         //STOP CONTAINER SETTINGS
+         remove_volumes: '{{docker.remove_volumes}}',
+         force_remove_containers: '{{docker.force_remove_containers}}',
+         //JENKINS SLAVE CONFIG
+         remote_fs_root: '{{docker.remote_fs_root}}',
          labels: '{{docker.labels}}',
+         //valid values: exclusive or normal
+         usage: 'exclusive',
+         availability_strategy: 'docker_once_retention_strategy',
+         availability_idle_timeout: 10,
+         executors: 1,
+         //LAUNCH METHOD
+         //valid values: launch_ssh or launch_jnlp
+         launch_method: '{{docker.launch_method}}',
+         //settings specific to launch_ssh (you only need one or the other)
+         launch_ssh_credentials_id: '{{docker.launch_ssh_credentials_id}}',
+         launch_ssh_port: '{{docker.launch_ssh_port}}',
+         launch_ssh_java_path: '{{docker.launch_ssh_java_path}}',
+         launch_ssh_jvm_options: '{{docker.launch_ssh_jvm_options}}',
+         launch_ssh_prefix_start_slave_command: '{{docker.launch_ssh_prefix_start_slave_command}}',
+         launch_ssh_suffix_start_slave_command: '{{docker.launch_ssh_suffix_start_slave_command}}',
+         launch_ssh_connection_timeout: 120,
+         launch_ssh_max_num_retries: 10,
+         launch_ssh_time_wait_between_retries: 10,
+         //settings specific to launch_jnlp
+         launch_jnlp_linux_user: 'jenkins',
+         launch_jnlp_lauch_timeout: 120,
+         launch_jnlp_slave_jar_options: '{{docker.launch_jnlp_slave_jar_options}}',
+         launch_jnlp_slave_jvm_options: '{{docker.launch_jnlp_slave_jvm_options}}',
+         launch_jnlp_different_jenkins_master_url: '{{docker.launch_jnlp_different_jenkins_master_url}}',
+         launch_jnlp_ignore_certificate_check: '{{docker.launch_jnlp_ignore_certificate_check}}',
+         //NODE PROPERTIES
+         //environment_variables is a HashMap of key/value pairs
+         environment_variables: [:],
+         //tool location key/value pairs from https://github.com/jenkinsci/jenkins/blob/master/core/src/main/java/hudson/tools/ToolLocationNodeProperty.java
+         //The key is type@name = home where type is typically the class name of the tool and name is the name given in the Global Tools configuration.
+         //For example let's say you have a global tool configuration named OracleJDK8 for JDK installations
+         //tool_locations would be something like ['hudson.model.JDK$DescriptorImpl@OracleJDK8': '/path/to/java_home']
+         //If you're unsure of the tool@name then check config.xml where YADocker configurations are saved.
+         tool_locations: [:],
+         remote_fs_root_mapping: ''
+
       ],
 {% endfor %}
       ],

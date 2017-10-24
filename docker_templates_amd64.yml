@@ -1,8 +1,23 @@
 - xenial-amd64:
   docker_image_name: 'linaro/xenial'
   max_instances: '1'
+  stop_container_timeout: 10
+  #valid values: pull_latest, pull_always, pull_once, pull_never
+  pull_strategy: 'pull_never'
+  remote_fs_root: '/home/buildslave'
   labels: 'docker-xenial docker-xenial-amd64 docker-xenial-amd64-08'
+  dns: '8.8.8.8'
+  #valid values: launch_ssh or launch_jnlp
+  launch_method: 'launch_ssh'
+  launch_ssh_credentials_id: '88434794-118e-40e4-9cd9-be1ae5d70eec'
+  launch_ssh_port: '22'
+  launch_ssh_connection_timeout: '60'
+  launch_ssh_max_num_retries: '1000'
+  launch_ssh_time_wait_between_retries: '60'
+  volumes: !include docker_x86_64_volumes.yml
 - utopic-amd64:
   docker_image_name: 'linaro/utopic'
   max_instances: '10'
   labels: 'docker-utopic docker-utopic-amd64 docker-utopic-amd64-08'
+  volumes: '/home/tcwg-buildslave/snapshots-ref:/home/tcwg-buildslave/snapshots-ref:ro
+            \n/home/tcwg-buildslave/.jenkins:/home/tcwg-buildslave/.jenkins:rw'

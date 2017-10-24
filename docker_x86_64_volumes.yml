@@ -1,0 +1,4 @@
+'/home/buildslave/srv:/home/buildslave/srv
+\n/srv/docker/ssh/buildslave.config:/home/buildslave/.ssh/config
+\n/srv/docker/ssh/buildslave.known_hosts:/home/buildslave/.ssh/known_hosts
+\n/srv/docker/ssh/id_rsa_buildslave.pub:/home/buildslave/.ssh/authorized_keys:ro'
