@@ -1,7 +1,7 @@
 Yet Another Docker Plugin config builder
 =======
 
-Yet Another Docker Plugib (yadp) is extremely hard to manage, when running multiple slaves with multiple images. Due to the way Jenkins displays the configuration page. YADP provides a [!groovy script](https://github.com/samrocketman/jenkins-bootstrap-jervis/blob/master/settings.groovy.EXAMPLE) which builds a json array to populate the config in Jenkins.
+Yet Another Docker Plugib (yadp) is extremely hard to manage, when running multiple slaves with multiple images. Due to the way Jenkins displays the configuration page. YADP provides a [groovy script](https://github.com/KostyaSha/yet-another-docker-plugin/blob/master/docs/script-console-scripts/configure-yadocker-cloud.groovy) which builds a json array to populate the config in Jenkins.
 
 This script uses yaml and jinja2 to generate a java jsonarray to build the configuration, using a !include constructor in the yaml file, allowing the ability to template up docker_images, since many of our slaves run the same image, it lessens repetition.
 

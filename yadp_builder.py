@@ -61,7 +61,7 @@ def get_parser():
                         help='Password for Jenkins server')
     parser.add_argument('-s', '--server', type=str,
                         default='https://ci.linaro.org',
-                        help='Jenkins server URL')
+                        help='Jenkins server URL. e.g. http://localhost:8080')
     parser.add_argument('-i', '--inventory', type=str, default='hosts.yml',
                         help='specify inventory host path')
     parser.add_argument('-l', '--loglevel', default='INFO',
