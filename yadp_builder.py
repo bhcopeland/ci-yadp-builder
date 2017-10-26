@@ -89,8 +89,11 @@ if __name__ == '__main__':
         template_output = jinja2_from_template(
                           './templates',
                           'configure-yadocker-cloud.groovy-dryrun.j2', data)
+
         publishdry = server.run_script(template_output)
-        logging.info(publishdry)
+        if 'error' in publishdry:
+            logging.info(publishdry)
+            exit(1)
     else:
         publish = server.run_script(template_output)
         logging.info(publish)
