@@ -94,6 +94,8 @@ if __name__ == '__main__':
         if 'error' in publishdry:
             logging.info(publishdry)
             exit(1)
+        else:
+            logging.info(publishdry)
     else:
         publish = server.run_script(template_output)
         logging.info(publish)
