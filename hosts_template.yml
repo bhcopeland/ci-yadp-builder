@@ -1,0 +1,99 @@
+# TEMPLATE FILE
+#
+# This is a template file, of all options available
+# If the same information is used on multiple variables, for example docker_templates
+# or volumes, then it is recommended to use the !include constructor. For example
+# !include docker_template_name.yml.
+#
+# Reference:
+# https://github.com/KostyaSha/yet-another-docker-plugin/blob/master/docs/script-console-scripts/configure-yadocker-cloud.groovy
+#
+
+- host1:
+  cloud_name: host1
+  docker_url: tcp://0.0.0.0:2375
+  docker_api_version: '2'
+  host_credentials_id:
+  # valid values: netty, jersey
+  connection_type: netty
+  connect_timeout: 0
+  max_containers: 1
+  docker_templates:
+    - docker-image:
+      max_instances: 1
+      # DOCKER CONTAINER LIFECYCLE
+      docker_image_name: ''
+      # PULL IMAGE SETTINGS
+      # valid values: pull_latest, pull_always, pull_once, pull_never
+      pull_strategy: 'pull_latest'
+      pull_registry_credentials_id: ''
+      # CREATE CONTAINER SETTINGS
+      docker_command: ''
+      hostname: ''
+      dns: '8.8.8.8'
+      #volumes requires /n on next line if more than one volume is used
+      volumes: '/var/example:/var/example:ro
+                \n/var/example2:/var/example2:rw'
+      volumes_from: ''
+      #enviroment requires /n on nextline if more than one env is used
+      enviroment: ''
+      port_bindings: ''
+      bind_all_declared_ports: false
+      #0 is unlimited
+      memory_limit_in_mb: 0
+      #0 is unlimited
+      cpu_shares: 0
+      run_container_privileged: false
+      allocate_pseudo_tty: false
+      mac_address: ''
+      #extra_hosts requires /n on nextline if more than one host is used
+      extra_hosts: ''
+      network_mode: ''
+      #devices requires /n on nextline if more than one device is used
+      devices: ''
+      cpuset_constraint_cpus: ''
+      cpuset_constraint_mems: ''
+      #links requires /n on nextline if more than one link is used
+      links: ''
+      #STOP CONTAINER SETTINGS
+      stop_container_timeout: 10
+      remove_volumes: false
+      force_remove_containers: false
+      #JENKINS SLAVE CONFIG
+      remote_fs_root: '/home/jenkins'
+      labels: 'docker'
+      #valid values: exclusive or normal
+      usage: 'exclusive'
+      availability_strategy: 'docker_once_retention_strategy'
+      availability_idle_timeout: 10
+      executors: 1
+      #LAUNCH METHOD
+      #valid values: launch_ssh or launch_jnlp
+      launch_method: 'launch_jnlp'
+      #settings specific to launch_ssh (you only need one or the other)
+      launch_ssh_credentials_id: ''
+      launch_ssh_port: 22
+      launch_ssh_java_path: ''
+      launch_ssh_jvm_options: ''
+      launch_ssh_prefix_start_slave_command: ''
+      launch_ssh_suffix_start_slave_command: ''
+      launch_ssh_connection_timeout: 120
+      launch_ssh_max_num_retries: 10
+      launch_ssh_time_wait_between_retries: 10
+      #settings specific to launch_jnlp
+      launch_jnlp_linux_user: 'jenkins'
+      launch_jnlp_lauch_timeout: 120
+      launch_jnlp_slave_jar_options: ''
+      launch_jnlp_slave_jvm_options: ''
+      launch_jnlp_different_jenkins_master_url: ''
+      launch_jnlp_ignore_certificate_check: false
+      #NODE PROPERTIES
+      #environment_variables is a HashMap of key/value pairs
+      environment_variables: '[:]'
+      #tool location key/value pairs from https://github.com/jenkinsci/jenkins/blob/master/core/src/main/java/hudson/tools/ToolLocationNodeProperty.java
+      #The key is type@name = home where type is typically the class name of the tool and name is the name given in the Global Tools configuration.
+      #For example let's say you have a global tool configuration named OracleJDK8 for JDK installations
+      #tool_locations would be something like ['hudson.model.JDK$DescriptorImpl@OracleJDK8': '/path/to/java_home']
+      #If you're unsure of the tool@name then check config.xml where YADocker configurations are saved.
+      tool_locations: '[:]'
+      remote_fs_root_mapping: ''
